@@ -1,0 +1,62 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Delete Products</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<div class="container mt-5">
+    <h2 class="mb-4">Delete Products</h2>
+
+    <!-- Success / Error Messages -->
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    <!-- Product ID Input Form -->
+    <div class="card p-3 mb-4 shadow-sm">
+        <h5 class="mb-3">Delete by Product ID</h5>
+        <form method="POST" class="row g-3">
+            {% csrf_token %}
+            <div class="col-auto">
+                <input type="number" name="product_id" class="form-control" placeholder="Enter Product ID" required>
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-danger">Delete</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Table of All Products -->
+    <h5 class="mb-3">All Products</h5>
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Product Name</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for p in products %}
+            <tr>
+                <td>{{ p.0 }}</td>
+                <td>{{ p.1 }}</td>
+                <td>{{ p.2 }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="3" class="text-center">No products found</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>
